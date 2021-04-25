@@ -1,0 +1,56 @@
+const path = require('path');
+const dotEnvPath = path.resolve('./.env');
+require('dotenv').config({ path: dotEnvPath});
+
+const chai  = require('chai');
+const expect = chai.expect;
+const assert = chai.assert;
+const ContractServices = require("../service/ContractServices");
+const web3Service = require("../service/Web3Service");
+
+
+
+describe('Test create contract service', () => {
+    it('Return a objet Contract service', () => {
+        expect(new ContractServices('moricheCoin.sol')).to.be.a('Object');
+    })
+
+})
+
+describe('Test compile contract ', () => {
+    const contract = "moricheCoin.sol";
+    const contractService = new ContractServices(contract);
+    let deployerAddress;
+    let buildPath;
+    let artifacts;
+    let newAddress;
+    it('Return a interface Contract its a string', () => {
+        contractService.compileContract();
+
+        //expect(contractService.contractsAssembly).to.be.a('json');
+
+      //  console.log(contractService.contractsAssembly);
+    })
+    before(() => {
+        buildPath = contractService.compilingPreperations();
+        const compiled = contractService.compileSources();
+        contractService.errorHandling(compiled);
+        contractService.writeOutput(compiled, buildPath);
+        deployerAddress = '0x5B0Ea3446DC82d67e68aF511Ca4c47A9727B7079';
+        artifacts = ['IERC20', 'MoriCoin'];
+
+        newAddress = web3Service.createAccount();
+
+        /*contractService.compileContract();
+        deployerAddress = '0x5B0Ea3446DC82d67e68aF511Ca4c47A9727B7079';*/
+    })
+    it('Return a deploy interface Contract its a string', () => {
+        console.log(newAddress.address+'-'+newAddress.privateKey);
+        contractService.deploy(newAddress.address,artifacts,buildPath);
+
+
+
+        })
+       // expect(contractService.contractsAssembly).to.be.a('string');
+
+})

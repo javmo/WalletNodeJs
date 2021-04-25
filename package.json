@@ -1,0 +1,50 @@
+{
+  "name": "wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon backend/index.js ",
+    "start": "node backend/index.js",
+    "postinstall": "npm run build",
+    "build": "cross-env NODE_ENV=production webpack",
+    "test": "mocha --reporter spec backend/test -r dotenv/config",
+    "server:dev": "webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "form-data-json-convert": "^1.2.2",
+    "fs-extra": "^4.0.3",
+    "http": "0.0.0",
+    "i": "^0.3.6",
+    "lowdb": "^1.0.0",
+    "mocha": "^8.2.1",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0",
+    "python-shell": "^2.0.3",
+    "solc": "^0.8.1",
+    "supertest": "^6.1.3",
+    "uuid": "^8.3.2",
+    "web3": "^1.3.1",
+    "webpack-dev-middleware": "^4.0.2"
+  },
+  "devDependencies": {
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.3.3",
+    "nodemon": "^1.19.4",
+    "style-loader": "^2.0.0",
+    "timeago.js": "^4.0.2",
+    "webpack": "^5.10.3",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
