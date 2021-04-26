@@ -7,7 +7,7 @@ const web3Service = require("../service/Web3Service");
 const getWallet = async (req , res) => {
     // busca en los valores de task en el json y los trae
     console.log("entra a crear wallet");
-    const wallet = await Wallet.findById(req.id)
+    const wallet = await Wallet.findById(req.params.id)
 
     res.json(wallet);
 };
@@ -20,20 +20,31 @@ const getWallets = async (req , res) => {
 };
 
 const crateWallet = async (req, res) => {
-    const newWallet = new Wallet({name: req.body.name});
+    const newWallet = new Wallet({owner: req.body.owner, name: req.body.name});
 
     const wallet = await newWallet.save();
 
-    const  account = web3Service.createAccount();
+  /*  const  account = web3Service.createAccount();
 
     await new Account({
         wallet: wallet.id,
         address: account.address,
         privateKey: account.privateKey
-    }).save();
+    }).save();*/
 
     res.json(wallet);
 }
+
+const deleteWallet = async (req, res) => {
+    const wallet = await Wallet.findByIdAndDelete(req.params.id);
+    if (wallet != null) {
+        await Account.deleteMany({wallet: wallet._id});
+        res.json({'message': 'Wallet Deleted'});
+
+    } else
+        res.json({'message': 'Wallet not exist'});
+}
+
 
 
 /*const createSong = async (req, res) => {
@@ -73,5 +84,7 @@ const likeSongs = async (req, res) => {
 module.exports = {
     getWallet,
     crateWallet,
-    getWallets
+    getWallets,
+    deleteWallet
 }
+
