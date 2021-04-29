@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 
 
 
+
 // Initializations
 const app = express();
 require('./database');

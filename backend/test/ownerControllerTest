@@ -1,0 +1,53 @@
+const chai  = require('chai');
+const chaiHttp = require('chai-http');
+const expect = chai.expect;
+const Owner = require('../models/Owner');
+const path = require('path');
+const dotEnvPath = path.resolve('./.env');
+const mongoose = require('mongoose');
+
+require('dotenv').config({ path: dotEnvPath});
+
+
+
+
+
+chai.use(chaiHttp);
+const url = 'http://localhost:3000/api/owners';
+
+
+describe('Create a owner and load his account: ', () => {
+    it('should create a owner', (done) => {
+        chai.request(url)
+            .post('')
+            .send({ name: "exchange_owner", password: "owner" })
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+});
+
+describe('Load eth in owner account: ', () => {
+    let owner;
+    before(async () => {
+        mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology:true,
+            useCreateIndex: true,
+        }).catch(err => console.error(err))
+
+       owner = await Owner.findOne().sort('-created_at');
+       await mongoose.disconnect();
+    })
+    it('should Load eth in owner account', (done) => {
+        chai.request(url)
+            .get('/load/' + owner.id)
+            .send({ amount: "105" })
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+});

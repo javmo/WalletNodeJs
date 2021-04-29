@@ -3,9 +3,10 @@ const  router = Router();
 
 
 
-const { buyEth } = require('../controllers/exchange.controllers')
+const { buyEth, sellEth } = require('../controllers/exchange.controllers')
 
-router.get('/buyEth', buyEth);
+router.get('/buyEth/:id', buyEth);
+router.get('/sellEth/:id', sellEth);
 
 
 

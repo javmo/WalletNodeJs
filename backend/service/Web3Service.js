@@ -1,13 +1,19 @@
 const  Web3  = require('web3');
-//const  web3 = new Web3(process.env.URI_PROVIDER);
+const logger = require('../service/logger');
 
 class Web3Service {
    constructor() {
       this.web3 = new Web3(process.env.URI_PROVIDER);
    }
 
-   createAccount(){
-      return this.web3.eth.accounts.create();
+   createAccount(password){
+
+       return this.web3.eth.personal.newAccount(password);
+      /*return this.web3.eth.accounts.create();*/
+   }
+
+   addWallet(account){
+       this.web3.eth.accounts.wallet.add(account);
    }
 
     getBalanceOf(account) {
@@ -21,13 +27,40 @@ class Web3Service {
             })
     }
 
-    send(fromAccount, toAccount, amountEth) {
+   async send(fromAccount, toAccount, amountEth) {
+       logger.info(`incoming transaction :rocket: from: ${fromAccount},to: ${toAccount},amountEth: ${amountEth}`);
 
-      return this.web3.eth.sendTransaction({
+        return this.web3.eth.sendTransaction({
             from: fromAccount,
             to: toAccount,
             value: this.web3.utils.toWei(amountEth.toString(), 'ether'),
-            data: ""})
+            data: ""
+        })
+            .catch(err => {
+                throw new Error(err);
+            })
+    }
+
+    async sendPersonal(fromAccount, toAccount, amountEth, password) {
+        const gasPrice = await this.web3.eth.getGasPrice();
+        const gas = await this.web3.eth.estimateGas({
+            from: fromAccount,
+            toAccount,
+            amount: this.web3.utils.toWei(amountEth.toString(), 'ether')
+        })
+        console.log({gas:gas})
+        console.log(await this.web3.eth.personal.getAccounts());
+       await this.web3.eth.personal.unlockAccount(fromAccount,password,5);
+        console.log({from: fromAccount, toAccount: toAccount, amountEth: amountEth});
+
+        return this.web3.eth.sendTransaction({
+            from: fromAccount,
+            to: toAccount,
+            gasPrice: gasPrice,
+            gas: gas,
+            value: this.web3.utils.toWei(amountEth.toString(), 'ether'),
+            data: ""
+        }, password)
             .catch(err => {
                 throw new Error(err);
             })
@@ -61,17 +94,13 @@ class Web3Service {
 
 
 
-
         } catch (e) {
             console.log('[erro send contract]' + e.message)
         }
     }
-
-
-
-
-
-
+    getCoibaseAddress() {
+       return this.web3.eth.getCoinbase();
+    }
 
 
 

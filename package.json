@@ -17,6 +17,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
@@ -29,6 +30,7 @@
     "mocha": "^8.2.1",
     "mongoose": "^5.11.8",
     "morgan": "^1.10.0",
+    "node-emoji": "^1.10.0",
     "python-shell": "^2.0.3",
     "solc": "^0.8.1",
     "supertest": "^6.1.3",
@@ -45,6 +47,7 @@
     "timeago.js": "^4.0.2",
     "webpack": "^5.10.3",
     "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "winston": "^3.3.3"
   }
 }

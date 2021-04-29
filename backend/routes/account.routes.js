@@ -3,12 +3,13 @@ const  router = Router();
 
 
 
-const { getAccount, getAccounts, crateAccount, getBalance } = require('../controllers/account.controllers')
+const { getAccount, getAccounts, crateAccount, getBalance, importAccount } = require('../controllers/account.controllers')
 
 router.get('/balance/:address', getBalance);
 router.get('/:id', getAccount);
 router.get('/', getAccounts);
 router.post("/", crateAccount);
+router.post("/import", importAccount);
 
 
 

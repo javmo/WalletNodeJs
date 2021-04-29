@@ -19,12 +19,25 @@ const getAccounts = async (req , res) => {
 
 const crateAccount = async (req, res) => {
 
-    const account = await web3Service.createAccount();
+    const account = await web3Service.createAccount(req.body.password);
+    console.log(account);
 
     const newAccount = await new Account({
         wallet: req.body.wallet,
-        address: account.address,
-        privateKey: account.privateKey
+        address: account,
+        password: req.body.password
+    }).save();
+
+    res.json(newAccount);
+}
+
+
+const importAccount = async (req, res) => {
+
+    const newAccount = await new Account({
+        wallet: req.body.wallet,
+        address: req.body.address,
+        password: req.body.password
     }).save();
 
     res.json(newAccount);
@@ -44,6 +57,7 @@ module.exports = {
     getAccount,
     getAccounts,
     crateAccount,
-    getBalance
+    getBalance,
+    importAccount
 
 }

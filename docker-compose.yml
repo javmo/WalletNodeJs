@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  etherum-client:
+    image: ethereum/client-go:stable
+    ports:
+      - "30303:30303"
+      - "8545:8545"
+    volumes:
+      - D:/ethdocker:/tmp
+    command: --rpc --rpcaddr "0.0.0.0" --rpcapi="db,eth,net,web3,personal" --rpccorsdomain "*" --allow-insecure-unlock --dev

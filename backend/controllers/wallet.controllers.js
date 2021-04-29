@@ -1,12 +1,12 @@
 const Wallet = require('../models/Wallet');
 const Account = require('../models/Account');
-const web3Service = require("../service/Web3Service");
+const Owner = require('../models/Owner');
+const WalletService = require('../service/WalletServices');
 
+const walletService = new WalletService();
 
 
 const getWallet = async (req , res) => {
-    // busca en los valores de task en el json y los trae
-    console.log("entra a crear wallet");
     const wallet = await Wallet.findById(req.params.id)
 
     res.json(wallet);
@@ -20,18 +20,18 @@ const getWallets = async (req , res) => {
 };
 
 const crateWallet = async (req, res) => {
-    const newWallet = new Wallet({owner: req.body.owner, name: req.body.name});
+
+    const owner = await Owner.findById(req.body.owner);
+    const newWallet = new Wallet({owner: owner, name: req.body.name});
 
     const wallet = await newWallet.save();
 
   /*  const  account = web3Service.createAccount();
-
     await new Account({
         wallet: wallet.id,
         address: account.address,
         privateKey: account.privateKey
     }).save();*/
-
     res.json(wallet);
 }
 
@@ -45,6 +45,20 @@ const deleteWallet = async (req, res) => {
         res.json({'message': 'Wallet not exist'});
 }
 
+const getWalletWithAccount = async (req, res) => {
+
+    const wallet = await Wallet.findById(req.params.id);
+
+    const accounts = await walletService.getAccountsWithBalance(wallet);
+
+    res.json({wallet: wallet, accounts: accounts });
+}
+
+const updateWallet = async (req, res) => {
+    const result = await Wallet.findByIdAndUpdate(req.params.id, req.body, {useFindAndModify: false});
+
+    res.json(result);
+};
 
 
 /*const createSong = async (req, res) => {
@@ -85,6 +99,8 @@ module.exports = {
     getWallet,
     crateWallet,
     getWallets,
-    deleteWallet
+    deleteWallet,
+    getWalletWithAccount,
+    updateWallet
 }
 

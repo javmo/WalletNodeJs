@@ -2,15 +2,18 @@ const Account = require('../models/Account');
 const web3Service = require("../service/Web3Service");
 
 class WalletServices {
+    async getAccountsWithBalance (wallet) {
+        const accounts = await Account.find({wallet: wallet.id});
 
-    getAccountsWithBalance (wallet) {
-        const accounts = Account.find({wallet: wallet._id});
+        const accountsBalances = [];
 
-        const accountsBalances = accounts.forEach(async account => {
+        for (const account of accounts) {
             const balance = await web3Service.getBalanceOf(account.address);
-            return {account: account.address, balance: balance };
-        })
+            accountsBalances.push({account: account.address, balance: balance});
+        }
         return accountsBalances;
     }
 
 }
+
+module.exports = WalletServices;
