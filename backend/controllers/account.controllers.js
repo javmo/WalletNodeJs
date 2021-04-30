@@ -1,55 +1,85 @@
 const Account = require('../models/Account');
+const logger = require('../service/logger');
 
 const web3Service = require("../service/Web3Service");
 
 
 const getAccount = async (req , res) => {
-    // busca en los valores de task en el json y los trae
-    const account = await Account.findById(req.id);
-
-    res.json(account);
+    
+     await Account.findById(req.params.id)
+     .then(account => {
+        res.json(account);
+     })
+    .catch(e => {
+        logger.warn(e);
+        res.json(e).status(500);
+    });
 };
 
 const getAccounts = async (req , res) => {
 
-    const accounts = await Account.find();
-
-    res.json(accounts);
+    await Account.find()
+    .then(accounts => {
+        res.json(accounts);
+    })
+    .catch(e => {
+        logger.warn(e);
+        res.json(e).status(500);
+    });
 };
 
 const crateAccount = async (req, res) => {
 
-    const account = await web3Service.createAccount(req.body.password);
-    console.log(account);
-
-    const newAccount = await new Account({
-        wallet: req.body.wallet,
-        address: account,
-        password: req.body.password
-    }).save();
-
-    res.json(newAccount);
+    await web3Service.createAccount(req.body.password)
+    .then(async account => {
+        logger.debug(account);
+        await new Account({
+            wallet: req.body.wallet,
+            address: account,
+            password: req.body.password
+        })
+        .save()
+        .then(newAccount => {
+            res.json(newAccount);
+        })
+        .catch(e => {
+            logger.error({e});
+            res.json(e).status(500);
+        })
+    })
+    .catch(e => {
+        logger.error(`:fire: error blockchain account creation ${e}`);
+        res.json(e).status(500);
+    })
 }
-
 
 const importAccount = async (req, res) => {
 
-    const newAccount = await new Account({
+    await new Account({
         wallet: req.body.wallet,
         address: req.body.address,
         password: req.body.password
-    }).save();
-
-    res.json(newAccount);
+    })
+    .save()
+    .then(newAccount => {
+        res.json(newAccount);
+    })
+    .catch(e => {
+        logger.error({e});
+        res.json(e).status(500);
+    })
 }
 
 const getBalance = async (req , res) => {
 
-    console.log(req.params.address)
-    const balance = await web3Service.getBalanceOf(req.params.address)
-    console.log(balance)
-
-    res.json({balance: balance});
+    await web3Service.getBalanceOf(req.params.address)
+    .then(balance => {
+        res.json({balance: balance});
+    })
+    .catch(e => {
+        logger.error(`:fire: error blockchain ${e}`);
+        res.json(e).status(500);
+    })   
 };
 
 
@@ -59,5 +89,4 @@ module.exports = {
     crateAccount,
     getBalance,
     importAccount
-
 }

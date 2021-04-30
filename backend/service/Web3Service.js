@@ -4,6 +4,13 @@ const logger = require('../service/logger');
 class Web3Service {
    constructor() {
       this.web3 = new Web3(process.env.URI_PROVIDER);
+      this.web3.eth.getNodeInfo()
+      .then(nodeInfo => {
+          logger.info(`:rocket: Blockchain is connected, node: ${nodeInfo}`);
+      })
+      .catch(e => {
+          logger.warn(`:warning:  Blockchain offline`);
+      })     
    }
 
    createAccount(password){

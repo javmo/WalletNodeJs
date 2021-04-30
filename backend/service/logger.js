@@ -12,7 +12,7 @@ const logger = createLogger({
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
         format.errors({stack: true}),
         logFormat),
-    transports: [new transports.Console()],
+    transports: [new transports.Console({ level: 'debug' })],
 });
 
 module.exports = logger;
