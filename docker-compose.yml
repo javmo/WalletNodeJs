@@ -1,11 +1,29 @@
 version: '2'
 
 services:
-  etherum-client:
-    image: ethereum/client-go:stable
+  ethereum:
+    image: ethereum/client-go:stable 
+    container_name: ethereum
     ports:
       - "30303:30303"
       - "8545:8545"
     volumes:
-      - D:/ethdocker:/tmp
-    command: --rpc --rpcaddr "0.0.0.0" --rpcapi="db,eth,net,web3,personal" --rpccorsdomain "*" --allow-insecure-unlock --dev
+      - ./ethdocker:/tmp
+    command: --dev --ws --ws.origins '*' --ws.api db,eth,net,web3,personal --http --http.api eth,web3,net --http.corsdomain '*' --http.addr 0.0.0.0 --http.vhosts '*' --allow-insecure-unlock
+    networks:
+      - app-network
+  db:
+    image: mongo
+    container_name: db
+    restart: unless-stopped
+    environment:
+       MONGO_INITDB_ROOT_USERNAME: walletdb
+       MONGO_INITDB_ROOT_PASSWORD: walletdb
+       MONGO_INITDB_DATABASE: walletdb
+    ports: 
+      - 27017:27017
+    networks:
+       - app-network
+networks:
+  app-network:
+    driver: bridge

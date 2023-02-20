@@ -9,7 +9,7 @@ class Web3Service {
           logger.info(`:rocket: Blockchain is connected, node: ${nodeInfo}`);
       })
       .catch(e => {
-          logger.warn(`:warning:  Blockchain offline`);
+          logger.warn(`:no_entry:  Blockchain offline-` + e);
       })     
    }
 
