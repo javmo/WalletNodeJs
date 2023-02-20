@@ -1,5 +1,5 @@
 const Owner = require('../models/Owner');
-const Account = require('../models/Account');
+const Account = require('../models/Account.js');
 const Wallet = require('../models/Wallet');
 
 const web3Service = require("../service/Web3Service");

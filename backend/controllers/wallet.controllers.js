@@ -1,5 +1,5 @@
 const Wallet = require('../models/Wallet');
-const Account = require('../models/Account');
+const Account = require('../models/Account.js');
 const Owner = require('../models/Owner');
 const WalletService = require('../service/WalletServices');
 
@@ -59,41 +59,6 @@ const updateWallet = async (req, res) => {
 
     res.json(result);
 };
-
-
-/*const createSong = async (req, res) => {
-    // levanta del post el json que se le envia con los campos name y description
-    // console.log(req);
-    const newSong = new Song({
-        title: req.body.title,
-        genre: req.body.genre,
-        // se graba la letra previo a grabar la cancion
-        lyric: await new Lyric(req.body.lyric).save()
-    });
-
-    res.json(await newSong.save());
-}
-
-const getSong = async (req, res) => {
-    const song = await Song.findById(req.params.id);
-    if(song == null)
-        res.json({title: '[SONG NOT FOUND]'});
-    else
-        res.json(song);
-}
-
-
-const deleteSong = async (req, res) => {
-    const song = await Song.findByIdAndDelete(req.params.id);
-    // tambien de elimina la letra
-    await Lyric.findByIdAndDelete(song.lyric._id);
-    res.json({'message': 'Song Deleted'});
-}
-
-const likeSongs = async (req, res) => {
-    const songs = await Song.find( {title: {$regex: req.query.q, $options: 'i'}}).limit(5);
-    res.json(songs);
-};*/
 
 module.exports = {
     getWallet,

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon backend/index.js --ignore ./ethdocker",
+    "dev": "cross-env NODE_ENV=development nodemon backend/index.js --ignore ethdocker",
     "start": "node backend/index.js",
     "postinstall": "npm run build",
     "build": "cross-env NODE_ENV=production webpack",
@@ -34,6 +34,8 @@
     "python-shell": "^2.0.3",
     "solc": "^0.8.1",
     "supertest": "^6.1.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.1",
     "uuid": "^8.3.2",
     "web3": "^1.3.1",
     "webpack-dev-middleware": "^4.0.2"

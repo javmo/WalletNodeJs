@@ -1,4 +1,4 @@
-const Account = require('../models/Account');
+const Account = require('../models/Account.js');
 const logger = require('../service/logger');
 
 const web3Service = require("../service/Web3Service");
