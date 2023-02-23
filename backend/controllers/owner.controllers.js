@@ -7,6 +7,7 @@ const logger = require('../service/logger');
 const walletService = new WalletService();
 
 const getOwner = async (req , res) => {
+    // #swagger.tags = ['owner']
     try{
         const owner = await Owner.findById(req.params.id);
         res.json(owner);
@@ -17,6 +18,7 @@ const getOwner = async (req , res) => {
 };
 
 const getOwnerByName = async (req , res) => {
+    // #swagger.tags = ['owner']
     try{
         const owner = await Owner.find({name: req.query.q})
         res.json(owner);
@@ -27,6 +29,7 @@ const getOwnerByName = async (req , res) => {
 };
 
 const getOwners = async (req , res) => {
+    // #swagger.tags = ['owner']
     try{
         const owners = await Owner.find();
         res.json(owners);
@@ -37,6 +40,7 @@ const getOwners = async (req , res) => {
 };
 
 const crateOwner = async (req, res) => {
+    // #swagger.tags = ['owner']
     try{
         const  account = await web3Service.createAccount(req.body.password);
         
@@ -60,6 +64,7 @@ const crateOwner = async (req, res) => {
 }
 
 const crateOwnerWithAccount = async (req, res) => {
+    // #swagger.tags = ['owner']
     try{
         const newOwner = await new Owner({
             name: req.body.name
@@ -81,6 +86,7 @@ const crateOwnerWithAccount = async (req, res) => {
 }
 
 const getOwnerWithAccount = async (req, res) => {
+    // #swagger.tags = ['owner']
     try{
         const owner = await Owner.findById(req.params.id);
 
@@ -95,6 +101,7 @@ const getOwnerWithAccount = async (req, res) => {
 }
 
 const loadOwnerAccount = async (req, res) => {
+    // #swagger.tags = ['owner']
     let account;
     try{
         const owner = await Owner.findById(req.params.id);

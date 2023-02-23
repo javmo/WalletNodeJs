@@ -27,10 +27,10 @@ app.use(bodyParser.json());
 
 
 // routes
-app.use('/api/wallets', require('./routes/wallet.routes'));
-app.use('/api/owners', require('./routes/owner.routes'));
+app.use('/api/wallet', require('./routes/wallet.routes'));
+app.use('/api/owner', require('./routes/owner.routes'));
 app.use('/api/exchange', require('./routes/exchange.routes'));
-app.use('/api/accounts', require('./routes/account.routes'));
+app.use('/api/account', require('./routes/account.routes'));
 // swagger routes
 app.use('/api-docs', require('./routes/api-docs'));
 

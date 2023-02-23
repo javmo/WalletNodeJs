@@ -7,12 +7,14 @@ const walletService = new WalletService();
 
 
 const getWallet = async (req , res) => {
+    // #swagger.tags = ['wallet']
     const wallet = await Wallet.findById(req.params.id)
 
     res.json(wallet);
 };
 
 const getWallets = async (req , res) => {
+    // #swagger.tags = ['Wallet']
 
     const wallets = await Wallet.find();
 
@@ -20,22 +22,18 @@ const getWallets = async (req , res) => {
 };
 
 const crateWallet = async (req, res) => {
+    // #swagger.tags = ['wallet']
 
     const owner = await Owner.findById(req.body.owner);
     const newWallet = new Wallet({owner: owner, name: req.body.name});
 
     const wallet = await newWallet.save();
 
-  /*  const  account = web3Service.createAccount();
-    await new Account({
-        wallet: wallet.id,
-        address: account.address,
-        privateKey: account.privateKey
-    }).save();*/
     res.json(wallet);
 }
 
 const deleteWallet = async (req, res) => {
+    // #swagger.tags = ['wallet']
     const wallet = await Wallet.findByIdAndDelete(req.params.id);
     if (wallet != null) {
         await Account.deleteMany({wallet: wallet._id});
@@ -46,6 +44,7 @@ const deleteWallet = async (req, res) => {
 }
 
 const getWalletWithAccount = async (req, res) => {
+    // #swagger.tags = ['wallet']
 
     const wallet = await Wallet.findById(req.params.id);
 
@@ -55,6 +54,7 @@ const getWalletWithAccount = async (req, res) => {
 }
 
 const updateWallet = async (req, res) => {
+    // #swagger.tags = ['wallet']
     const result = await Wallet.findByIdAndUpdate(req.params.id, req.body, {useFindAndModify: false});
 
     res.json(result);

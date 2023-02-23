@@ -5,6 +5,7 @@ const web3Service = require("../service/Web3Service");
 
 
 const getAccount = async (req , res) => {
+    // #swagger.tags = ['account']
     
      await Account.findById(req.params.id)
      .then(account => {
@@ -17,6 +18,7 @@ const getAccount = async (req , res) => {
 };
 
 const getAccounts = async (req , res) => {
+    // #swagger.tags = ['account']
 
     await Account.find()
     .then(accounts => {
@@ -29,6 +31,7 @@ const getAccounts = async (req , res) => {
 };
 
 const crateAccount = async (req, res) => {
+    // #swagger.tags = ['account']
 
     await web3Service.createAccount(req.body.password)
     .then(async account => {
@@ -54,6 +57,7 @@ const crateAccount = async (req, res) => {
 }
 
 const importAccount = async (req, res) => {
+    // #swagger.tags = ['account']
 
     await new Account({
         wallet: req.body.wallet,
@@ -72,6 +76,9 @@ const importAccount = async (req, res) => {
 
 const getBalance = async (req , res) => {
 
+    // #swagger.tags = ['account']
+    // #swagger.description = 'Endpoint para obter balance de la cuenta.'
+    // #swagger.parameters['id'] = { description: 'Address: 0x5E4e65926BA27467555EB562121fac00D24E9dD2.' }
     await web3Service.getBalanceOf(req.params.address)
     .then(balance => {
         res.json({balance: balance});

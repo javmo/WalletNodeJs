@@ -5,6 +5,7 @@ const Wallet = require('../models/Wallet');
 const web3Service = require("../service/Web3Service");
 
 const buyEth = async (req , res) => {
+    // #swagger.tags = ['exchange']
     const account = await Account.findById(req.params.id);
     console.log(req.params.id);
     console.log(account);
@@ -23,6 +24,7 @@ const buyEth = async (req , res) => {
 };
 
 const sellEth = async (req, res) => {
+    // #swagger.tags = ['exchange']
 
     const account = await Account.findById(req.params.id);
     console.log(account);

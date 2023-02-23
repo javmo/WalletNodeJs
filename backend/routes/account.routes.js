@@ -5,8 +5,9 @@ const  router = Router();
 
 const { getAccount, getAccounts, crateAccount, getBalance, importAccount } = require('../controllers/account.controllers')
 
+// #swagger.tags = ['account']
 router.get('/balance/:address', getBalance);
-
+// #swagger.tags = ['Account']
 router.get('/:id', getAccount);
 /**
  * @openapi

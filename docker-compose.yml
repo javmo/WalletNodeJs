@@ -9,7 +9,7 @@ services:
       - "8545:8545"
     volumes:
       - ./ethdocker:/tmp
-    command: --dev --ws --ws.origins '*' --ws.api db,eth,net,web3,personal --http --http.api eth,web3,net --http.corsdomain '*' --http.addr 0.0.0.0 --http.vhosts '*' --allow-insecure-unlock
+    command: --dev --ws --ws.origins '*' --ws.api db,eth,net,web3,personal --rpccorsdomain '*' --http --http.api eth,web3,net --http.corsdomain '*' --http.addr 0.0.0.0 --http.vhosts '*' --allow-insecure-unlock
     networks:
       - app-network
   db:
