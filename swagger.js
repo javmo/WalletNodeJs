@@ -30,7 +30,7 @@ const swaggerOptions = {
             "description": "Endpoints"
         },
         {
-            "name": "Wallet",
+            "name": "wallet",
             "description": "Endpoints"
         },
     ],
